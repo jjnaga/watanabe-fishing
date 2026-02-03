@@ -3,7 +3,7 @@
 ## Overview
 
 ```
-User → watanabefishing.site → Cloudflare → Tunnel → Bastion → Dev Box:8080
+User → watanabefishing.site → Cloudflare → Tunnel → Bastion → Dev Box:8082
 ```
 
 ## Domain: watanabefishing.site
@@ -72,7 +72,7 @@ ingress:
   # ... existing rules ...
 
   - hostname: watanabefishing.site
-    service: http://dev-box-ip:8080
+    service: http://dev-box-ip:8082
 
   # Catch-all (must be last)
   - service: http_status:404
@@ -90,7 +90,7 @@ sudo systemctl restart cloudflared
 ### Docker Setup
 The site runs via Docker with nginx serving static files.
 
-**Port:** 8080
+**Port:** 8082
 **Container:** nginx:stable-alpine (via docker-compose)
 
 ### Running the Site
@@ -147,7 +147,7 @@ docker-compose logs web
 │  Config:  /etc/cloudflared/config.yml (local)                  │
 │                                                                 │
 │  Ingress rule:                                                 │
-│    watanabefishing.site → http://dev-box:8080                  │
+│    watanabefishing.site → http://dev-box:8082                  │
 └────────────────────────────────────────────────────────────────┘
                               │
                               │ (internal network)
@@ -220,7 +220,7 @@ These use the same infrastructure pattern:
 5. **Check Docker:**
    ```bash
    docker-compose ps
-   curl localhost:8080
+   curl localhost:8082
    ```
    Should return HTML.
 
